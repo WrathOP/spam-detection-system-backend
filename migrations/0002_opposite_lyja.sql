@@ -1,0 +1,1 @@
+ALTER TABLE "spam_reports" ADD COLUMN "report_id" serial PRIMARY KEY NOT NULL;

@@ -1,10 +1,9 @@
-import express from "express";
+import { Router } from "express";
+import { getUserController } from "./user.controller";
 
-const Router = express.Router();
+const router = Router();
 
-Router.get("/", (req: any, res: any) => {
-    return res.status(200).json({ message: "Users endpoint" });
-});
+// Define the route and associate it with the controller
+router.get("/:id", getUserController);
 
-export { Router };
-module.exports = Router;
+module.exports = router;

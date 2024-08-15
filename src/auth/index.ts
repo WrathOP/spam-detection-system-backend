@@ -1,11 +1,17 @@
 import { Router } from "express";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { createUser, getUser } from "../api/user/users.service";
+import { createUser, getUserByPhoneNumber } from "../api/user/user.service";
 import jwt from "jsonwebtoken";
 import { comparePassword, hashPassword } from "./password_hashing";
 
 import { Login, Signup } from "./auth.interface";
+
+// Not making a conroller for auth because it's a small file
+// and only 3 routes
+
+// Every other route will be in the api folder and will have a controller
+// and a service file
 
 const authRouter = Router();
 
@@ -22,7 +28,7 @@ authRouter.post(
             }
 
             // Get user from database
-            const user = await getUser(phone_number);
+            const user = await getUserByPhoneNumber(phone_number);
 
             if (!user) {
                 return res.status(StatusCodes.UNAUTHORIZED).json({
@@ -47,15 +53,17 @@ authRouter.post(
             const token = jwt.sign(
                 { userId: user.id, phoneNumber: user.phoneNumber },
                 process.env.JWT_SECRET as string,
-                { expiresIn: "1h" }
+                // Just for ease in development, in production use 1h
+                { expiresIn: "2 days" }
             );
 
+            console.log("Token", token);
             // Set token in HTTP-only cookie
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "strict",
-                maxAge: 3600000, // 1 hour
+                maxAge: 3600000, 
             });
 
             return res.status(StatusCodes.OK).json({
@@ -88,7 +96,7 @@ authRouter.post(
                 });
             }
 
-            const user = await getUser(phone_number);
+            const user = await getUserByPhoneNumber(phone_number);
             if (user) {
                 return res
                     .status(StatusCodes.BAD_REQUEST)

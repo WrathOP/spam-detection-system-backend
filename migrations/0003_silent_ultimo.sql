@@ -1,0 +1,1 @@
+ALTER TABLE "spam_reports" ADD CONSTRAINT "spam_reports_contact_phone_number_reported_by_unique" UNIQUE("contact_phone_number","reported_by");
