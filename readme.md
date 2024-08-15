@@ -22,6 +22,8 @@ This project is a Node.js Express application built with TypeScript that provide
 
 ### Installation
 
+Although I am including the Database URL for your convenience, you can also create your own database and use that.  Here are the steps to get the project up and running:
+
 1. Change the env variables in the `.env` file. and add your postgres database url
 
 ```
