@@ -10,7 +10,11 @@
         "seed": "node src/utils/addDummy.js"
     },
     "keywords": [],
-    "author": "",
+    "author": {
+        "name": "Pratham Mittal",
+        "email": "pratham200209@gmail.com",
+        "url": "https://github.com/WrathOP"
+    },
     "license": "ISC",
     "description": "",
     "dependencies": {
