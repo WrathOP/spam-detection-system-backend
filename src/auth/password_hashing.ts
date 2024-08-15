@@ -1,11 +1,9 @@
 import bcrypt from "bcrypt";
 
-const PEPPER = process.env.PASSWORD_PEPPER; 
-const SALT_ROUNDS = 10; 
-
 export async function hashPassword(password: string): Promise<string> {
+    const SALT_ROUNDS = 10;
     // Combine password with pepper before hashing
-    const pepperedPassword = password + PEPPER;
+    const pepperedPassword = password + process.env.PASSWORD_PEPPER;
 
     // Hash the peppered password
     const hashedPassword = await bcrypt.hash(pepperedPassword, SALT_ROUNDS);
@@ -19,8 +17,11 @@ export async function comparePassword(
 ): Promise<boolean> {
     try {
         // Add the pepper to the plain password
-        const pepperedPassword = plainPassword + PEPPER;
+        console.log("Pepper", process.env.PASSWORD_PEPPER);
+        const pepperedPassword = plainPassword + process.env.PASSWORD_PEPPER;
 
+        console.log("Peppered Password", pepperedPassword);
+        console.log("Hashed Password", hashedPassword);
         // Compare the peppered plain password with the hashed password
         const isMatch = await bcrypt.compare(pepperedPassword, hashedPassword);
 

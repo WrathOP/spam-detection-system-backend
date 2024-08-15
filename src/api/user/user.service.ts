@@ -2,6 +2,8 @@ import { database } from "../../db/db";
 import { usersTable } from "../../db/schemas/schema";
 import { eq, lt, gte, ne } from "drizzle-orm";
 
+// Only being used in auth/index.ts and this exposes the password hash
+// which is a security vulnerability so don't send out htis exact response
 export const getUserByPhoneNumber = async (
     phone_number: number
 ): Promise<any> => {
@@ -12,6 +14,7 @@ export const getUserByPhoneNumber = async (
             name: usersTable.name,
             username: usersTable.username,
             phoneNumber: usersTable.phoneNumber,
+            password : usersTable.password,
             email: usersTable.email,
         })
         .from(usersTable)

@@ -79,7 +79,7 @@ authRouter.post(
         } catch (error) {
             console.error(error);
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                message: "Internal server error",
+                message: "Internal server error" + error,
             });
         }
     }
@@ -106,6 +106,9 @@ authRouter.post(
             // Hash the password
             const hashedPassword = await hashPassword(password);
 
+            console.log("Hashed Password", hashedPassword);
+            console.log("Pepper", process.env.PASSWORD_PEPPER);
+            console.log("Salt Rounds", process.env.SALT_ROUNDS);
             // Create user with hashed password
             const createdUser = await createUser(
                 name,
@@ -147,7 +150,7 @@ authRouter.post(
             console.error(error);
             return res
                 .status(StatusCodes.INTERNAL_SERVER_ERROR)
-                .json({ message: "Internal server error" });
+                .json({ message: "Internal server error" + error });
         }
     }
 );
