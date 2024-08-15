@@ -17,11 +17,8 @@ export async function comparePassword(
 ): Promise<boolean> {
     try {
         // Add the pepper to the plain password
-        console.log("Pepper", process.env.PASSWORD_PEPPER);
         const pepperedPassword = plainPassword + process.env.PASSWORD_PEPPER;
 
-        console.log("Peppered Password", pepperedPassword);
-        console.log("Hashed Password", hashedPassword);
         // Compare the peppered plain password with the hashed password
         const isMatch = await bcrypt.compare(pepperedPassword, hashedPassword);
 

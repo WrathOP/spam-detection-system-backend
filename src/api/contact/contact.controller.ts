@@ -16,7 +16,6 @@ export const getContactController = async (
     try {
         const { phoneNumber, name } = req.query;
 
-        console.log(phoneNumber, name);
         if (!phoneNumber && !name) {
             return res.status(400).json({
                 message: "phone number or name is required for searching",
